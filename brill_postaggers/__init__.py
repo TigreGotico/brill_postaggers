@@ -21,6 +21,7 @@ class BrillPostagger:
     def __init__(self, model: str):
         with open(model, "rb") as f:
             self.tagger = pickle.load(f)
+        nltk.download('punkt_tab')
 
     @staticmethod
     def from_pretrained(lang: str):
