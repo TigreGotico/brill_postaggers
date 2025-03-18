@@ -10,7 +10,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
 def get_version():
-    version_file = os.path.join(BASEDIR, 'crf_query_xtract', 'version.py')
+    version_file = os.path.join(BASEDIR, 'brill_postaggers', 'version.py')
     major, minor, build, alpha = (None, None, None, None)
     with open(version_file) as f:
         for line in f:
