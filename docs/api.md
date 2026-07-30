@@ -12,8 +12,8 @@ A thin wrapper around a pickled NLTK Brill tagger.
 
 ### `BrillPostagger.MODELS`
 
-Class attribute. A `dict[str, str]` mapping a language code to the model file
-stem that ships in the package:
+Class attribute. A `dict[str, str]` that maps a language code to the model
+file stem shipped in the package:
 
 ```python
 BrillPostagger.MODELS == {
@@ -31,8 +31,8 @@ BrillPostagger.MODELS == {
 }
 ```
 
-The stems encode the source treebank (for example `pt_bosque` is the Portuguese
-Bosque UD treebank). Use the keys to enumerate supported languages:
+The stems encode the source treebank. For example, `pt_bosque` is the
+Portuguese Bosque UD treebank. Use the keys to list the supported languages:
 
 ```python
 for code in sorted(BrillPostagger.MODELS):
@@ -41,27 +41,27 @@ for code in sorted(BrillPostagger.MODELS):
 
 ### `BrillPostagger.from_pretrained(lang: str) -> BrillPostagger`
 
-Static method. The normal entry point. It:
+Static method. The normal entry point. It does the following:
 
-1. normalizes `lang` with `lang.split("-")[0].lower()`, so `"PT-BR"` -> `"pt"`,
-2. looks the code up in `MODELS` (raising `KeyError` for an unknown code),
-3. loads the bundled `<stem>.pkl` from the package directory,
-4. returns a ready `BrillPostagger`.
+1. Normalizes `lang` with `lang.split("-")[0].lower()`, so `"PT-BR"` becomes `"pt"`.
+2. Looks the code up in `MODELS`, raising `KeyError` for an unknown code.
+3. Loads the bundled `<stem>.pkl` from the package directory.
+4. Returns a ready `BrillPostagger`.
 
 ```python
 tagger = BrillPostagger.from_pretrained("es")
 ```
 
-The region split only handles a `-` separator, so `"pt-BR"` normalizes but
-`"pt_PT"` is passed through and would `KeyError`; pass the bare two-letter code
-when in doubt.
+The region split only handles a `-` separator. `"pt-BR"` normalizes, but
+`"pt_PT"` passes through unchanged and raises `KeyError`. Pass the bare
+two-letter code when in doubt.
 
 ### `BrillPostagger(model: str)`
 
-Constructor. `model` is the absolute path to a pickled NLTK tagger. Loading any
-instance calls `nltk.download('punkt_tab')` so the tokenizer is available. You
-rarely call this directly — prefer `from_pretrained` — but it lets you load a
-model you trained yourself:
+Constructor. `model` is the absolute path to a pickled NLTK tagger. Loading
+any instance calls `nltk.download('punkt_tab')` so the tokenizer is
+available. You rarely call this directly (prefer `from_pretrained`), but it
+lets you load a model you trained yourself:
 
 ```python
 tagger = BrillPostagger("/path/to/my_lang-brill.pkl")
@@ -69,9 +69,9 @@ tagger = BrillPostagger("/path/to/my_lang-brill.pkl")
 
 ### `BrillPostagger.tag(sentence: str) -> list[tuple[str, str]]`
 
-Instance method. Word-tokenizes `sentence` with `nltk.word_tokenize`, then runs
-the Brill tagger over the tokens. Returns a list of `(token, tag)` tuples in
-order, with punctuation kept as its own token:
+Instance method. Word-tokenizes `sentence` with `nltk.word_tokenize`, then
+runs the Brill tagger over the tokens. Returns a list of `(token, tag)`
+tuples in order, with punctuation kept as its own token:
 
 ```python
 tagger = BrillPostagger.from_pretrained("pt")
@@ -87,10 +87,10 @@ Tags are [Universal Dependencies POS tags](https://universaldependencies.org/u/p
 
 | Attribute | Type | Notes |
 | --- | --- | --- |
-| `tagger` | NLTK Brill tagger | The unpickled model; exposes its own `.tag(tokens)` over pre-tokenized lists. |
+| `tagger` | NLTK Brill tagger | The unpickled model. It exposes its own `.tag(tokens)` over pre-tokenized lists. |
 
 If you already have tokens, you can bypass `word_tokenize` and call the
-underlying model directly:
+wrapped NLTK model directly through the `.tagger` attribute:
 
 ```python
 tagger = BrillPostagger.from_pretrained("en")
@@ -105,8 +105,5 @@ tagger.tagger.tag(["hello", "world"])
 | Unknown language code in `from_pretrained` | `KeyError` |
 | Bad path in `BrillPostagger(model)` | `FileNotFoundError` |
 
-## Where next
-
-- [quickstart.md](quickstart.md) — install and first call
-- [advanced.md](advanced.md) — guards, batching, reuse, tagset filtering
-</content>
+---
+[← Quickstart](quickstart.md) · [Home](../README.md) · [Advanced →](advanced.md)

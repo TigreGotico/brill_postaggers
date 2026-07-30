@@ -1,9 +1,9 @@
-# Advanced — recipes and gotchas
+# Advanced: recipes and gotchas
 
 ## Guard an unknown language
 
 `from_pretrained` raises `KeyError` for a code it does not ship. Check against
-`MODELS` before loading, or catch it:
+`MODELS` before loading, or catch the error:
 
 ```python
 from brill_postaggers import BrillPostagger
@@ -20,9 +20,9 @@ print(safe_tagger("ja"))                  # None
 
 ## Load each language once
 
-Constructing a tagger unpickles a model and calls `nltk.download('punkt_tab')`,
-so build one per language and keep it. A small cache avoids repeat work when you
-tag in several languages:
+Constructing a tagger unpickles a model and calls `nltk.download('punkt_tab')`.
+Build one tagger per language and keep it. A small cache avoids repeat work
+when you tag text in several languages:
 
 ```python
 from functools import lru_cache
@@ -38,7 +38,7 @@ tagger_for("pt").tag("boa noite")   # same instance, no reload
 
 ## Tag many sentences
 
-`tag()` works one sentence at a time. Wrap it for a batch:
+`tag()` works one sentence at a time. Wrap it to process a batch:
 
 ```python
 from brill_postaggers import BrillPostagger
@@ -52,8 +52,8 @@ for s in tagged:
 
 ## Pull out only the words of a given class
 
-The return is plain tuples, so filtering is ordinary Python. Extract the nouns,
-or the surface forms of any UD class:
+The return value is plain tuples, so filtering is ordinary Python. Extract
+the nouns, or the surface forms of any UD class:
 
 ```python
 from brill_postaggers import BrillPostagger
@@ -67,8 +67,8 @@ print(nouns)   # ['gato', 'sofá']
 ## Skip tokenization when you already have tokens
 
 `tag()` runs `nltk.word_tokenize` for you. If your pipeline already produced
-tokens, call the wrapped NLTK model directly via the `.tagger` attribute and
-keep your own tokenization:
+tokens, call the wrapped NLTK model directly through the `.tagger` attribute
+and keep your own tokenization:
 
 ```python
 from brill_postaggers import BrillPostagger
@@ -80,7 +80,7 @@ print(tagger.tagger.tag(tokens))
 
 ## Build a frequency profile
 
-Counting tags is a one-liner with `collections.Counter` — useful as a cheap
+Counting tags is a one-liner with `collections.Counter`. This gives a cheap
 syntactic fingerprint of a text:
 
 ```python
@@ -95,27 +95,25 @@ print(counts.most_common(3))
 
 ## Gotchas
 
-- The PyPI dist name is `brill_postagger` (singular); the import name is
+- The PyPI dist name is `brill_postagger` (singular). The import name is
   `brill_postaggers` (plural).
 - The first construction needs network access for `nltk.download('punkt_tab')`.
   After it caches to `~/nltk_data`, offline use works.
 - `from_pretrained` only splits on `-`, so `"pt_PT"` (underscore) is not
-  normalized and would `KeyError`. Pass the bare code or a `-` separated locale.
-- Tags follow the UD scheme, not the Penn Treebank scheme — expect `NOUN`, not
-  `NN`, and `PUNCT` for punctuation.
-- Accuracy reflects the source UD treebank for each language; out-of-domain or
-  heavily code-switched text degrades gracefully but is not the training target.
+  normalized and raises `KeyError`. Pass the bare code or a `-` separated locale.
+- Tags follow the UD scheme, not the Penn Treebank scheme. Expect `NOUN`,
+  not `NN`, and `PUNCT` for punctuation.
+- Accuracy reflects the source UD treebank for each language. Out-of-domain
+  or heavily code-switched text degrades gracefully but is not the training
+  target.
 
 ## Where in the toolchain
 
 `brill_postaggers` is a leaf POS-tagging component of the TigreGotico NLP
-toolchain: a fast, dependency-light tagger you can drop into a larger pipeline
-when you need UD part-of-speech tags without pulling in a heavy model stack. It
-holds no entry points and is not an OVOS/OPM plugin — import it as a plain
+toolchain: a dependency-light tagger you can drop into a larger pipeline when
+you need UD part-of-speech tags without pulling in a heavy model stack. It
+holds no entry points and is not an OVOS/OPM plugin. Import it as a plain
 library.
 
-## Where next
-
-- [quickstart.md](quickstart.md) — install and first call
-- [api.md](api.md) — the full class and return-shape reference
-</content>
+---
+[← API reference](api.md) · [Home](../README.md)
