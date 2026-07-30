@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3a3](https://github.com/TigreGotico/brill_postaggers/tree/0.1.3a3) (2026-07-30)
+
+[Full Changelog](https://github.com/TigreGotico/brill_postaggers/compare/0.1.3a2...0.1.3a3)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#11](https://github.com/TigreGotico/brill_postaggers/pull/11) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.3a2](https://github.com/TigreGotico/brill_postaggers/tree/0.1.3a2) (2026-05-30)
 
 [Full Changelog](https://github.com/TigreGotico/brill_postaggers/compare/0.1.3a1...0.1.3a2)
