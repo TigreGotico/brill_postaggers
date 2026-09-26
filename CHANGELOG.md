@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3a4](https://github.com/TigreGotico/brill_postaggers/tree/0.1.3a4) (2026-09-26)
+
+[Full Changelog](https://github.com/TigreGotico/brill_postaggers/compare/0.1.3a3...0.1.3a4)
+
+**Merged pull requests:**
+
+- Update actions/checkout action to v7 [\#9](https://github.com/TigreGotico/brill_postaggers/pull/9) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.1.3a3](https://github.com/TigreGotico/brill_postaggers/tree/0.1.3a3) (2026-07-30)
 
 [Full Changelog](https://github.com/TigreGotico/brill_postaggers/compare/0.1.3a2...0.1.3a3)
